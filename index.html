@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineCasal - Nosso Espaço de Filmes</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="header-left">
+                <h1>🎬 CineCasal</h1>
+                <p>Nossa jornada cinematográfica juntos</p>
+            </div>
+            <div class="header-right">
+                <button id="btn-abrir-modal" class="btn-primary"><i class="fas fa-plus"></i> Adicionar Filme</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="movie-section">
+            <h2 class="section-title"><i class="fas fa-check-circle text-success"></i> Já Assistidos</h2>
+            <div id="assistidos-grid" class="movies-grid"></div>
+        </section>
+
+        <section class="movie-section">
+            <h2 class="section-title"><i class="fas fa-heart text-danger"></i> Lista de Desejos</h2>
+            <div id="para-assistir-grid" class="movies-grid"></div>
+        </section>
+    </main>
+
+    <!-- MODAL -->
+    <div id="modal-filme" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2><i class="fas fa-film"></i> Novo Filme</h2>
+            <form id="form-filme" autocomplete="off">
+                
+                <div class="form-group search-container">
+                    <label for="titulo">Nome do Filme</label>
+                    <input type="text" id="titulo" required placeholder="Digite para buscar...">
+                    <!-- Caixa onde vão aparecer as prévias dos filmes -->
+                    <div id="autocomplete-results" class="autocomplete-suggestions"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select id="status">
+                        <option value="false">Lista de Desejos (Quero Assistir)</option>
+                        <option value="true">Já Assistido</option>
+                    </select>
+                </div>
+
+                <!-- Bloco de notas separadas escondido por padrão -->
+                <div id="grupo-notas" class="form-row-notas" style="display: none;">
+                    <div class="form-group">
+                        <label for="nota-ele">🤵 Minha Nota</label>
+                        <input type="text" id="nota-ele" placeholder="Ex: 9/10">
+                    </div>
+                    <div class="form-group">
+                        <label for="nota-ela">👰 Nota Dela</label>
+                        <input type="text" id="nota-ela" placeholder="Ex: 10/10">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">Salvar Filme</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
