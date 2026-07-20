@@ -8,19 +8,24 @@
     --success: #00e676;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background-color: var(--bg-dark);
     color: var(--text-main);
     margin: 0;
     padding: 0;
+    overflow-x: hidden; /* Evita rolagem horizontal indesejada */
 }
 
-/* Ajuste do Cabeçalho Lado a Lado */
+/* Header */
 header {
     background: linear-gradient(180deg, rgba(22, 22, 26, 0.8) 0%, rgba(10, 10, 12, 0) 100%);
     backdrop-filter: blur(20px);
-    padding: 30px 40px;
+    padding: 15px 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -30,11 +35,11 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 20px;
+    gap: 15px;
 }
 
 .header-left h1 {
-    font-size: 2.4rem;
+    font-size: 1.6rem;
     margin: 0;
     background: linear-gradient(45deg, #ff3366, #ff9933);
     -webkit-background-clip: text;
@@ -44,16 +49,17 @@ header {
 
 .header-left p {
     color: var(--text-muted);
-    font-size: 1rem;
-    margin: 5px 0 0 0;
+    font-size: 0.85rem;
+    margin: 3px 0 0 0;
 }
 
 .btn-primary {
     background: linear-gradient(45deg, var(--accent), #ff5e62);
     color: white;
     border: none;
-    padding: 12px 24px;
-    font-size: 0.95rem;
+    padding: 10px 16px;
+    font-size: 0.85rem;
+    margin-top: 5px;;
     font-weight: 600;
     border-radius: 30px;
     cursor: pointer;
@@ -67,20 +73,20 @@ header {
     box-shadow: 0 6px 20px rgba(255, 51, 102, 0.5);
 }
 
-/* Grids e Elementos permanecem com o design premium */
+/* Main */
 main {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 40px;
+    padding: 20px;
 }
 
 .movie-section {
-    margin-bottom: 60px;
+    margin-bottom: 40px;
 }
 
 .section-title {
-    font-size: 1.5rem;
-    margin-bottom: 25px;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -89,10 +95,11 @@ main {
 .text-success { color: var(--success); }
 .text-danger { color: var(--accent); }
 
+/* Grids adaptáveis */
 .movies-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
 }
 
 .movie-card {
@@ -102,35 +109,48 @@ main {
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     transition: all 0.4s ease;
     border: 1px solid rgba(255, 255, 255, 0.03);
+    display: flex;
+    flex-direction: column;
 }
 
 .movie-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-5px);
     border-color: rgba(255, 255, 255, 0.1);
 }
 
 .movie-poster {
     width: 100%;
-    height: 300px;
+    aspect-ratio: 2 / 3; /* Proporção padrão de pôster de cinema */
     object-fit: cover;
+    display: block;
 }
 
 .movie-info {
-    padding: 15px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
 }
 
 .movie-title {
-    font-size: 1.1rem;
-    margin: 0 0 12px 0;
+    font-size: 0.85rem;
     font-weight: 600;
+    margin: 0 0 8px 0;
+    line-height: 1.2;
+    /* Limita o título a no máximo 2 linhas caso seja muito grande */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .card-actions {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 15px;
-    padding-top: 12px;
+    margin-top: 12px;
+    padding-top: 10px;
     border-top: 1px solid rgba(255,255,255,0.05);
 }
 
@@ -139,60 +159,55 @@ main {
     border: none;
     color: var(--text-muted);
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     transition: color 0.2s;
+    padding: 4px 0;
 }
 
 .btn-watched:hover { color: var(--success); }
 .btn-delete:hover { color: #ff3b30; }
-
-.badge-nota {
-    background: rgba(0, 230, 118, 0.15);
-    color: var(--success);
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
 
 /* Modal */
 .modal {
     display: none;
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.8);
+    background-color: rgba(0,0,0,0.85);
     backdrop-filter: blur(10px);
     z-index: 1000;
     align-items: center;
     justify-content: center;
+    padding: 15px;
 }
 
 .modal-content {
     background-color: var(--bg-surface);
-    padding: 35px;
-    border-radius: 24px;
-    width: 90%;
-    max-width: 400px;
+    padding: 25px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 420px;
     position: relative;
     border: 1px solid rgba(255,255,255,0.1);
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .close-modal {
     position: absolute;
-    top: 20px; right: 25px;
+    top: 15px; right: 20px;
     font-size: 1.8rem;
     cursor: pointer;
     color: var(--text-muted);
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 8px;
-    font-size: 0.9rem;
+    margin-bottom: 6px;
+    font-size: 0.85rem;
 }
 
 .form-group input, .form-group select {
@@ -202,14 +217,7 @@ main {
     border: 1px solid rgba(255,255,255,0.1);
     border-radius: 8px;
     color: white;
-    box-sizing: border-box;
-}
-
-.form-group small {
-    color: var(--text-muted);
-    display: block;
-    margin-top: 5px;
-    font-size: 0.8rem;
+    font-size: 0.95rem;
 }
 
 .btn-submit {
@@ -217,23 +225,14 @@ main {
     background: var(--accent);
     color: white;
     border: none;
-    padding: 14px;
+    padding: 12px;
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
+    margin-top: 10px;
 }
 
-/* --- NOVOS ESTILOS PARA PRÉVIA E NOTAS DUPLAS --- */
-
-/* Alinhamento das notas lado a lado no formulário */
-.form-row-notas {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-/* Container da busca e lista de resultados */
+/* Busca Autocomplete */
 .search-container {
     position: relative;
 }
@@ -246,65 +245,59 @@ main {
     background-color: var(--bg-card);
     border: 1px solid rgba(255,255,255,0.1);
     border-radius: 8px;
-    max-height: 240px;
+    max-height: 200px;
     overflow-y: auto;
     z-index: 1100;
     box-shadow: 0 10px 25px rgba(0,0,0,0.5);
     display: none;
 }
 
-/* Item individual da prévia */
 .suggestion-item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 10px;
+    gap: 10px;
+    padding: 8px;
     cursor: pointer;
     border-bottom: 1px solid rgba(255,255,255,0.05);
-    transition: background 0.2s;
-}
-
-.suggestion-item:hover {
-    background-color: rgba(255, 51, 102, 0.15);
 }
 
 .suggestion-item img {
-    width: 40px;
-    height: 60px;
+    width: 35px;
+    height: 50px;
     object-fit: cover;
     border-radius: 4px;
-    background-color: #333;
-}
-
-.suggestion-info {
-    display: flex;
-    flex-direction: column;
 }
 
 .suggestion-title {
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     color: var(--text-main);
 }
 
 .suggestion-year {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--text-muted);
-    margin-top: 2px;
 }
 
-/* Badges de notas duplas nos cartões */
+/* Badges de Notas */
+.form-row-notas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
 .badge-container-notas {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     flex-wrap: wrap;
 }
 
 .badge-casal {
     font-size: 0.75rem;
     font-weight: 600;
-    padding: 4px 8px;
-    border-radius: 12px;
+    padding: 3px 8px;
+    border-radius: 10px;
     display: inline-flex;
     align-items: center;
     gap: 4px;
@@ -318,4 +311,67 @@ main {
 .badge-ela {
     background: rgba(255, 45, 85, 0.15);
     color: #ff2d55;
+}
+
+/* --- REGRAS ESPECÍFICAS PARA CELULARES (MOBILE) --- */
+@media (max-width: 600px) {
+    header {
+        padding: 15px;
+    }
+
+    .header-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .header-right {
+        width: 100%;
+    }
+
+    .btn-primary {
+        width: 100%;
+        text-align: center;
+    }
+
+    main {
+        padding: 15px;
+    }
+
+    /* Ajusta a grade para colocar 2 filmes por linha em telas pequenas */
+    .movies-grid {
+    display: grid;
+    /* Força 2 colunas de tamanhos iguais */
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 15px;
+    width: 100%;
+}
+
+    .movie-card {
+    background-color: var(--bg-card);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Garante alinhamento uniforme */
+}
+
+    .movie-info {
+        padding: 10px;
+    }
+
+    .movie-title {
+        font-size: 0.9rem;
+    }
+
+    .badge-casal {
+        font-size: 0.7rem;
+        padding: 2px 6px;
+    }
+
+    .modal-content {
+        padding: 20px 15px;
+    }
 }
