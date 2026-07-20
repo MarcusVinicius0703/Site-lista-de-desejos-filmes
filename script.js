@@ -40,11 +40,12 @@ auth.onAuthStateChanged((user) => {
   }
 });
 
-// 3. SINCRONIZAÇÃO COM O FIREBASE (TEMPO REAL)
+// 3. SINCRONIZAÇÃO EM TEMPO REAL COM O FIREBASE
 function ouvirFilmesDaNuvem(userId) {
+  // O .on('value') escuta qualquer mudança no banco de dados em tempo real
   database.ref('usuarios/' + userId + '/filmes').on('value', (snapshot) => {
     listaDeFilmes = snapshot.val() || [];
-    renderizarFilmes(); // Atualiza a tela com os filmes vindos do banco de dados
+    renderizarFilmes(); // Atualiza a tela instantaneamente para todos os dispositivos
   });
 }
 
@@ -120,18 +121,51 @@ document.addEventListener('click', (e) => {
 });
 
 // 5. RENDERIZAR OS FILMES NA TELA
+// 5. RENDERIZAR OS FILMES NA TELA (COM ANIMAÇÃO EM CASCATA)
+// 5. RENDERIZAR OS FILMES NA TELA (CORRIGIDO)
+// Variável para saber se o Firebase já respondeu a primeira busca
+let carregandoPrimeiraVez = true;
+
+// 5. RENDERIZAR OS FILMES NA TELA
 function renderizarFilmes() {
   const gridAssistidos = document.getElementById('assistidos-grid');
   const gridParaAssistir = document.getElementById('para-assistir-grid');
 
   if (!gridAssistidos || !gridParaAssistir) return;
 
+  // Se ainda estiver conectando/carregando do Firebase
+  if (carregandoPrimeiraVez && listaDeFilmes.length === 0) {
+    const loadingHtml = `
+      <div class="loading-placeholder">
+        <div class="spinner"></div>
+        <span>Buscando seus filmes...</span>
+      </div>
+    `;
+    gridParaAssistir.innerHTML = loadingHtml;
+    gridAssistidos.innerHTML = '';
+    carregandoPrimeiraVez = false;
+    return;
+  }
+
   gridAssistidos.innerHTML = '';
   gridParaAssistir.innerHTML = '';
 
-  listaDeFilmes.forEach(filme => {
+  let indexAssistidos = 0;
+  let indexParaAssistir = 0;
+
+  listaDeFilmes.forEach((filme) => {
+    let delay = 0;
+
+    if (filme.assistido) {
+      delay = (indexAssistidos % 10) * 0.08;
+      indexAssistidos++;
+    } else {
+      delay = (indexParaAssistir % 10) * 0.08;
+      indexParaAssistir++;
+    }
+
     const cardHtml = `
-      <div class="movie-card">
+      <div class="movie-card" style="animation-delay: ${delay}s;">
         <img src="${filme.capa}" alt="Poster" class="movie-poster">
         <div class="movie-info">
           <h3 class="movie-title">${filme.titulo}</h3>
@@ -262,3 +296,6 @@ if (formFilme) {
     modal.style.display = 'none';
   };
 }
+
+// Garante a renderização ao carregar a janela
+window.onload = renderizarFilmes;

@@ -375,3 +375,46 @@ main {
         padding: 20px 15px;
     }
 }
+
+/* Animação suave para os cards de filmes */
+@keyframes surgirSuave {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.movie-card {
+  animation: surgirSuave 0.4s ease-out forwards;
+  will-change: transform, opacity;
+}
+
+/* Estado de carregamento dos cards */
+.loading-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: #888;
+  font-size: 1.1rem;
+  grid-column: 1 / -1; /* Ocupa a largura toda do grid */
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border-top-color: #e50914; /* Cor temática (tipo Netflix) */
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 12px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
